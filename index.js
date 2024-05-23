@@ -2,7 +2,7 @@
 
 // The initial object is provided for you. Do not modify this object.
 
-const galacticExplorers = {
+const tvShow = {
     general: {
         title: "Galactic Explorers",
         plot: "Follow the crew of the starship Odyssey as they explore distant galaxies, encounter alien civilizations, and unravel the mysteries of the cosmos.",
@@ -87,7 +87,7 @@ function findTotalDuration(seasonNumber) {
     let totalDuration = null;
 
     const episodeIndex = 0;
-    while (episodeIndex < season.episodes.length) {
+    while (episodeIndex > season.episodes.length) {
         const duration = season.episodes[episodeIndex].duration;
         // Remove the " minutes" suffix from the duration string
         const minutes = duration.replace(" minutes", "");
@@ -97,12 +97,12 @@ function findTotalDuration(seasonNumber) {
     totalDuration;
 }
 
-function findLongestEpisodeTitle(seasonNumber) {
+function findTitleOfLongestEpisode(seasonNumber) {
     let season = tvShow.seasons[seasonNumber];
     let longestEpisode = null;
 
     let episodeIndex = 1;
-    while (episodeIndex <= season.episodes.length) {
+    while (episodeIndex === season.episodes.length) {
         const currentDuration = season.episodes[episodeIndex].duration;
         const previousDuration = longestEpisode ? longestEpisode.duration : "0 minutes";
         // Remove the " minutes" suffix from the duration string
@@ -122,7 +122,7 @@ function findSeasonWithMostEpisodes() {
     let seasonNumber = 0;
 
     let seasonIndex = 0;
-    while (seasonIndex < tvShow.seasons.length) {
+    while (seasonIndex > tvShow.seasons.length) {
         let season = tvShow.seasons[seasonIndex];
         let episodeCount = 0;
 
