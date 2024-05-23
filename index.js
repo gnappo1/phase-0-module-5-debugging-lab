@@ -2,7 +2,7 @@
 
 // The initial object is provided for you. Do not modify this object.
 
-const galacticExplorers = {
+const tvShow = {
     general: {
         title: "Galactic Explorers",
         plot: "Follow the crew of the starship Odyssey as they explore distant galaxies, encounter alien civilizations, and unravel the mysteries of the cosmos.",
@@ -83,38 +83,65 @@ const galacticExplorers = {
 // Debug the following functions using console.logs and the VS Code debugger.
 
 function findTotalDuration(seasonNumber) {
-    let season = tvShow.seasons[seasonNumber];
-    let totalDuration = null;
+    // Remember that the season number is 1-based
+    let season = tvShow.seasons[seasonNumber - 1];
 
-    const episodeIndex = 0;
+    // Using 0 as the initial value for totalDuration is better than using null
+    // because we are adding numbers to it
+    let totalDuration = 0;
+
+    // episodeIndex should use let instead of const
+    let episodeIndex = 0;
+
+    // The loop should run while the episode index is less than the total number of episodes in the season
     while (episodeIndex < season.episodes.length) {
         const duration = season.episodes[episodeIndex].duration;
         // Remove the " minutes" suffix from the duration string
         const minutes = duration.replace(" minutes", "");
-        totalDuration += minutes;
+
+        // Convert the minutes string to a number and add it to the total duration
+        const minutesInt = parseInt(minutes);
+
+        totalDuration += minutesInt;
+
+        // Increment the episode index
+        episodeIndex++;
     }
 
-    totalDuration;
+    // don't forget the return statement
+    return totalDuration;
 }
 
-function findLongestEpisodeTitle(seasonNumber) {
-    let season = tvShow.seasons[seasonNumber];
-    let longestEpisode = null;
+function findTitleOfLongestEpisode(seasonNumber) {
+    // Remember that the season number is 1-based
+    let season = tvShow.seasons[seasonNumber - 1];
 
+    // Using the first episode as the initial value for longestEpisode is better than using null
+    let longestEpisode = season.episodes[0];
+
+    // now starting from 1 makes more sense!
     let episodeIndex = 1;
-    while (episodeIndex <= season.episodes.length) {
-        const currentDuration = season.episodes[episodeIndex].duration;
-        const previousDuration = longestEpisode ? longestEpisode.duration : "0 minutes";
-        // Remove the " minutes" suffix from the duration string
-        const currentMinutes = currentDuration.replace(" minutes", "");
-        const previousMinutes = previousDuration.replace("minutes", "");
 
-        if (currentMinutes > previousMinutes) {
+    // The loop should run while the episode index is less than the total number of episodes in the season
+    while (episodeIndex < season.episodes.length) {
+        const currentDuration = season.episodes[episodeIndex].duration;
+        const previousDuration = longestEpisode.duration;
+
+        // Remove the " minutes" suffix from the duration string
+        // AND convert the minutes string to a number
+        const currentMinutesInt = parseInt(currentDuration.replace(" minutes", ""));
+        const previousMinutesInt = parseInt(previousDuration.replace("minutes", ""));
+
+        if (currentMinutesInt > previousMinutesInt) {
             longestEpisode = season.episodes[episodeIndex];
         }
+
+        // Increment the episode index or you'll be stuck in an infinite loop
+        episodeIndex++;
     }
 
-    return longestEpisode;
+    // we only want the title of the longest episode not the entire object
+    return longestEpisode.title;
 }
 
 function findSeasonWithMostEpisodes() {
@@ -122,19 +149,36 @@ function findSeasonWithMostEpisodes() {
     let seasonNumber = 0;
 
     let seasonIndex = 0;
+    // The loop should run while the season index is less than the total number of seasons
     while (seasonIndex < tvShow.seasons.length) {
         let season = tvShow.seasons[seasonIndex];
-        let episodeCount = 0;
 
-        let episodeIndex = 1;
-        while (episodeIndex <= season.episodes.length) {
-            episodeCount++;
-        }
+        // Corrected but still unnecessary code
+        // let episodeCount = 0;
+
+        // let episodeIndex = 0;
+
+        // // The loop should run while the episode index is less than the total number of episodes in the season
+        // while (episodeIndex < season.episodes.length) {
+        //     episodeCount++;
+
+        //     // Increment the episode index or you'll be stuck in an infinite loop
+        //     episodeIndex++;
+        // }
+
+        // REFACTOR
+        // The episode count should be the length of the episodes array
+        let episodeCount = season.episodes.length;
 
         if (episodeCount > maxEpisodeCount) {
             episodeCount = maxEpisodeCount;
-            seasonNumber = seasonIndex;
+
+            // Remember that the season number is 1-based
+            seasonNumber = seasonIndex + 1;
         }
+
+        // Increment the season index or you'll be stuck in an infinite loop
+        seasonIndex++;
     }
 
     return seasonNumber;

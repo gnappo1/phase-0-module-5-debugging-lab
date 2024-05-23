@@ -8,10 +8,10 @@ describe('index.js', () => {
         });
     });
 
-    describe('findLongestEpisodeTitle', function () {
+    describe('findTitleOfLongestEpisode', function () {
         it('should return the title of the longest episode', function () {
-            expect(findLongestEpisodeTitle(1)).to.equal("The Forbidden Planet");
-            expect(findLongestEpisodeTitle(2)).to.equal("Homecoming Special");
+            expect(findTitleOfLongestEpisode(1)).to.equal("The Forbidden Planet");
+            expect(findTitleOfLongestEpisode(2)).to.equal("Final Frontier");
         });
     });
 
